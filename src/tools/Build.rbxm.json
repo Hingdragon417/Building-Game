@@ -1,0 +1,11 @@
+{
+  "$className": "Tool",
+  "$properties": {
+    "Name": "Build",
+    "RequiresHandle": false,
+    "CanBeDropped": false
+  },
+  "LocalScript": {
+    "$path": "Build.client.luau"
+  }
+}

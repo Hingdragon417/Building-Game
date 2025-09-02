@@ -1,0 +1,11 @@
+{
+  "$className": "Tool",
+  "$properties": {
+    "Name": "Destroy",
+    "RequiresHandle": false,
+    "CanBeDropped": false
+  },
+  "LocalScript": {
+    "$path": "Destroy.client.luau"
+  }
+}
