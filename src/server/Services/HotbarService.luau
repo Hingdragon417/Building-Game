@@ -41,37 +41,66 @@ function HotbarService:GetDefaultHotbar()
 end
 
 function HotbarService:AssignTools(player, hotbar)
+    print("AssignTools called for player:", player.Name)
     local backpack = player:WaitForChild("Backpack")
     local toolsFolder = ServerStorage:WaitForChild("Tools")
+    
+    print("Tools folder exists:", toolsFolder)
+    print("Tools in ServerStorage.Tools:")
+    for _, child in pairs(toolsFolder:GetChildren()) do
+        print(" -", child.Name, child.ClassName)
+    end
+    
+    print("Hotbar items to assign:")
+    for i, itemName in pairs(hotbar) do
+        print(" ", i, ":", itemName)
+    end
 
     for _, itemName in hotbar do
-        local tool = toolsFolder:FindFirstChild(itemName)
-        if tool then
-            local clone = tool:Clone()
-            clone.Parent = backpack
+        if itemName and itemName ~= "" then
+            local tool = toolsFolder:FindFirstChild(itemName)
+            print("Looking for tool:", itemName, "found:", tool)
+            if tool then
+                local clone = tool:Clone()
+                clone.Parent = backpack
+                print("Tool assigned to backpack:", clone.Name)
+            else
+                print("Tool not found:", itemName)
+            end
         end
     end
 end
 
 function HotbarService.Client:EquipTool(player, slotIndex)
+    print("EquipTool called for player:", player.Name, "slot:", slotIndex)
     local DataService = Knit.GetService("DataService")
     local session = DataService.getSession(player)
     
     if not session or not session.Data or not session.Data.hotbar then
+        print("No session data or hotbar data")
         return
     end
     
     local itemName = session.Data.hotbar[slotIndex]
+    print("Item name from hotbar:", itemName)
     if not itemName then
+        print("No item name found")
         return
     end
     
     local character = player.Character
     if not character then
+        print("No character found")
         return
     end
     
     local toolsFolder = ServerStorage:WaitForChild("Tools")
+    print("Tools folder:", toolsFolder)
+    print("Tools in folder:")
+    for _, child in pairs(toolsFolder:GetChildren()) do
+        print(" -", child.Name, child.ClassName)
+    end
+    
     local equipped = {}
     for _, child in pairs(character:GetChildren()) do
         if child:IsA("Tool") then
@@ -89,9 +118,13 @@ function HotbarService.Client:EquipTool(player, slotIndex)
     end
     if not alreadyEquipped then
         local tool = toolsFolder:FindFirstChild(itemName)
+        print("Looking for tool:", itemName, "found:", tool)
         if tool then
             local clone = tool:Clone()
             clone.Parent = character
+            print("Tool cloned and equipped:", clone.Name)
+        else
+            print("Tool not found in ServerStorage.Tools!")
         end
     end
 end

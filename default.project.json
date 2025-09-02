@@ -16,12 +16,6 @@
       }
     },
 
-    "ServerStorage": {
-      "Tools": {
-        "$path": "src/tools"
-      }
-    },
-
     "StarterPlayer": {
       "StarterPlayerScripts": {
         "Client": {
