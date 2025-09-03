@@ -4,6 +4,7 @@ local StarterGui = game:GetService("StarterGui")
 local Packages = ReplicatedStorage.Packages
 
 local Knit = require(Packages.Knit)
+local BuildToolHandler = require(script.Parent.Scripts.BuildToolHandler)
 
 do
     Knit.AddControllersDeep(script.Parent.Controllers)
@@ -11,6 +12,8 @@ do
     Knit.Start()
         :andThen(function()
             print("Client has started!")
+            -- Initialize the build tool handler
+            BuildToolHandler:Init()
         end)
         :catch(warn)
 end
